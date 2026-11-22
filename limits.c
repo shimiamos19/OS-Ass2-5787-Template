@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include <sys/resource.h>
 
-/**
- * Starter code for operating systems limits exploration.
- * 
- * Author: Michael J. May
- * Version: 2026
- */
-
 int main() {
-    printf("Maximum Stack Size:  %ld\n", 0L);
-    printf("Maximum Number of Processes: %ld\n", 0L);
-    printf("Maximum Number of File Descriptors: %ld\n", 0L);
+    struct rlimit limit;
+
+    getrlimit(RLIMIT_STACK, &limit);
+    printf("Maximum Stack Size:  %ld\n", (long)limit.rlim_cur);
+
+    getrlimit(RLIMIT_NPROC, &limit);
+    printf("Maximum Number of Processes: %ld\n", (long)limit.rlim_cur);
+
+    getrlimit(RLIMIT_NOFILE, &limit);
+    printf("Maximum Number of File Descriptors: %ld\n", (long)limit.rlim_cur);
+
     return 0;
 }
